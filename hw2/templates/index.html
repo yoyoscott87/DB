@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Information Management</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Basic Information</h1>
+        
+        <!-- Form to add a new record -->
+        <form action="{{ url_for('create_bp.submit') }}" method="POST">
+            <div class="form-group">
+                <input type="text" class="form-control" name="uid" placeholder="Enter uid" required>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="name" placeholder="Enter name" required>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="game_name" placeholder="Enter game" required>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="game_rank" placeholder="Enter rank" required>
+            </div>
+            <div class="form-group">
+                <input type="date" class="form-control" name="birth" placeholder="Your birth" required>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="country" placeholder="Enter country" required>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="team_name" placeholder="Enter team" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Information</button>
+        </form>
+
+        <!-- Form to delete selected records and update existing ones -->
+        <form action="{{ url_for('delete_bp.delete_posts') }}" method="POST">
+            <h2 class="mt-5">Information List</h2>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Select</th> <!-- 新增選擇列 -->
+                        <th>UID</th>
+                        <th>Name</th>
+                        <th>Game</th>
+                        <th>Game Rank</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for post in posts %}
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="idgames" value="{{ post.idgame }}"> <!-- 復選框 -->
+                        </td>
+                        <td>{{ post.uid }}</td>
+                        <td>{{ post.name }}</td>
+                        <td>{{ post.game_name }}</td>
+                        <td><input type="text" name="game_rank_{{ post.idgame }}" value="{{ post.game_rank }}" required></td>
+                        <td><button type="submit" formaction="{{ url_for('update_bp.update_post', post_id=post.idgame) }}" class="btn btn-success">Update</button></td>
+                                    
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <!-- 刪除選中記錄的按鈕 -->
+            <button type="submit" class="btn btn-danger">Delete Selected</button>
+        </form>
+        <form action="{{ url_for('delete_bp.delete_posts') }}" method="POST">
+            <h2 class="mt-5">Player List</h2>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>Name</th>
+                        <th>Birth</th>
+                        <th>Country</th>
+                        <th>Update</th>
+                        <!-- 其他欄位 -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for player in players %}
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="idPlayerss" value="{{ player.idPlayers }}"> <!-- 復選框 -->
+                        </td>
+                        <td>{{ player.name }}</td>
+                        <td>{{ player.birth }}</td>
+                        <td><input type="text" name="country_{{ player.idPlayers }}" value="{{ player.country }}" required></td>
+                        <td><button type="submit" formaction="{{ url_for('update_bp.update_post', post_id=player.idPlayers) }}" class="btn btn-success">Update</button></td>
+                        <!-- 其他欄位 -->
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button type="submit" class="btn btn-danger">Delete Selected</button>
+        </form>
+        <form action="{{ url_for('delete_bp.delete_posts') }}" method="POST">
+            <h2 class="mt-5">Team List</h2>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>Name</th>
+                        <th>Team Name</th>
+                        <th>Update</th>
+                        <!-- 其他欄位 -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for team in teams %}
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="idteam_ids" value="{{ team.idteam_name }}"> <!-- 复选框 -->
+                        </td>
+                        <td>{{ team.name }}</td>
+                        <td><input type="text" name="team_name_{{ team.idteam_name }}" value="{{ team.team_name }}" required></td>
+                        <td>
+                            <button type="submit" formaction="{{ url_for('update_bp.update_post', post_id=team.idteam_name) }}" class="btn btn-success">Update</button>
+                        </td>
+                        <!-- 其他欄位 -->
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button type="submit" class="btn btn-danger">Delete Selected</button>
+        </form>     
+    </div>
+
+
+    <div class="text-center">
+        <a href="{{ url_for('join_bp.index') }}" class="btn btn-primary">Check Join Data</a>
+    </div>
+    <!-- Bootstrap and JavaScript libraries -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+</body>
+</html>
