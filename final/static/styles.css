@@ -1,0 +1,252 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+h1, h2 {
+    text-align: center;
+    color: #00468c;
+    margin: 20px 0;
+}
+
+form {
+    width: 80%;
+    max-width: 500px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+form input[type="text"],
+form input[type="password"],
+form textarea,
+form input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+form button {
+    background-color: #00468c;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+form button:hover {
+    background-color: #003366;
+}
+
+a {
+    color: #00468c;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card img {
+    max-width: 100%;
+    border-radius: 10px;
+    margin: 10px 0;
+}
+
+.card h2 {
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+.card p {
+    font-size: 14px;
+    color: #555;
+}
+
+.card a {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* 訊息框樣式 */
+.message-container {
+    width: 80%;
+    max-width: 600px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.message-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.message-container li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #e9ecef;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 10px 0;
+    padding: 10px;
+    color: #333;
+    overflow: hidden;
+}
+
+.message-container li span {
+    flex-grow: 1;
+    margin-right: 10px;
+    word-wrap: break-word;
+}
+
+.message-container li button {
+    background-color: #00468c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-left: 10px;
+}
+
+.message-container li button:hover {
+    background-color: #003366;
+}
+
+/* 按鈕區 */
+button {
+    display: inline-block;
+    background-color: #00468c;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    margin: 10px auto;
+}
+
+button:hover {
+    background-color: #003366;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+.create-thread-button {
+    position: fixed; /* Fixes the button relative to the viewport */
+    bottom: 20px; /* Adjusts distance from the bottom of the viewport */
+    right: 20px; /* Adjusts distance from the right of the viewport */
+    width: 60px; /* Sets width to make it circular */
+    height: 60px; /* Sets height to make it circular */
+    background-color: #a4b7d7; /* Blue background color */
+    color: white; /* White text */
+    border: none; /* No border */
+    border-radius: 50%; /* Makes the button perfectly circular */
+    font-size: 30px; /* Adjusts font size for the "+" */
+    display: flex; /* Enables flexbox for centering */
+    align-items: center; /* Centers content vertically */
+    justify-content: center; /* Centers content horizontally */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a soft shadow */
+    cursor: pointer; /* Shows pointer cursor on hover */
+    z-index: 1000; /* Ensures the button appears above other elements */
+}
+
+.create-thread-button:hover {
+    background-color: #6589b1; /* Darker blue on hover */
+}
+
+.create-thread-button a {
+    text-decoration: none; /* Removes underline from the link */
+    color: white; /* Keeps the link text white */
+}
+.threads-header {
+    background-color: #6589b1; /* 深灰背景 */
+    color: white; /* 文字顏色 */
+    padding: 30px 30px; /* 上下內邊距 */
+    margin-bottom: 20px; /* 與內容分隔 */
+    display: flex;
+    flex-direction: column; /* 垂直佈局 */
+    align-items: center; /* 元素置中 */
+    text-align: center; /* 文字置中 */
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between; /* 左右對齊 */
+    align-items: center; /* 垂直置中 */
+    width: 100%; /* 撐滿父容器 */
+    max-width: 1200px; /* 最大寬度限制 */
+    margin: 0 auto; /* 置中對齊 */
+    position: relative; /* 添加相對定位 */
+}
+.nav-links {
+    display: flex;
+    gap: 20px; /* 連結間距 */
+}
+
+.nav-links a {
+    color: white; /* 連結文字顏色 */
+    text-decoration: none; /* 移除底線 */
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.nav-links a:hover {
+    text-decoration: underline; /* 滑鼠移上時顯示底線 */
+}
+
+h1 {
+    color: white;
+    margin: 0; /* 移除預設的 margin */
+    font-size: 24px;
+    font-weight: bold;
+    position: absolute; /* 絕對定位 */
+    left: 50%; /* 文字左邊界置於 50% */
+    transform: translateX(-50%); /* 使文字真正置中 */
+}
+
+

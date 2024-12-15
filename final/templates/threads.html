@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
+    <title>Threads</title>
+    <style>
+        
+        .card {
+            text-align: center; /* 卡片內內容置中 */
+            padding: 20px;
+            margin: 10px auto;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card h2 {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .card p {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .card img {
+            margin: 10px auto;
+            max-width: 200px;
+            border-radius: 10px;
+        }
+        .card a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #00468c;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .card a:hover {
+            background-color: #003366;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="threads-header">
+        <div class="header-container">
+            <div class="nav-links">
+                <a href="/threads">Home</a>
+                <a href="/logout">Logout</a>
+            </div>
+            <h1>All Threads</h1>
+        </div>
+    </div>
+    
+    {% for thread in threads %}
+        <div class="card">
+            <h2>{{ thread['title'] }}</h2>
+            {% if thread['image'] %}
+                <img src="/uploads/{{ thread['image'] }}" alt="Thread Image">
+            {% endif %}
+            <p>{{ thread.get('description', 'No description provided') }}</p>
+            <a href="/threads/{{ thread['_id'] }}">View Details</a>
+        </div>
+    {% endfor %}
+    <div class="create-thread-button">
+        <a href="/create.html">+</a>
+    </div>
+</body>
+</html>

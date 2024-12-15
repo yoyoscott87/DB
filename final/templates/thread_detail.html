@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>{{ thread['title'] }}</title>
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .description {
+            text-align: center;
+            padding: 15px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .message-box {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .message-list {
+            list-style: none;
+            padding: 0;
+        }
+        .message-list li {
+            text-align: center;
+            background-color: #e9ecef;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            padding: 10px;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        button {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">{{ thread['title'] }}</div>
+        <div class="description">{{ thread['description'] or "No description provided" }}</div>
+
+        <!-- 新增圖片顯示 -->
+        {% if thread['image'] %}
+            <div style="text-align: center; margin-bottom: 20px;">
+                <img src="/uploads/{{ thread['image'] }}" alt="Thread Image" style="max-width: 400px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+            </div>
+        {% endif %}
+
+        {% if not thread['closed'] %}
+            <form method="POST" class="message-box">
+                <label for="text">Add Message:</label>
+                <input type="text" id="text" name="text" required>
+                <button type="submit">Send</button>
+            </form>
+        {% else %}
+            <p style="color: red; text-align: center;">This thread is closed. You cannot add new messages.</p>
+        {% endif %}
+        <h3 style="text-align: center;">Messages:</h3>
+        <ul class="message-list">
+            {% for message in thread['messages'] %}
+                <li>
+                    <strong>{{ message['user'] }}:</strong> {{ message['text'] }}
+                    {% if session['username'] == message['user'] %}
+                        <form method="POST" action="{{ url_for('delete_message', thread_id=thread['_id'], message_id=message['_id']) }}" style="display: inline;">
+                            <button type="submit">Delete</button>
+                        </form>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="button-container">
+            <a href="{{ url_for('threads') }}"><button>Back to Threads</button></a>
+            {% if session['username'] == thread['created_by'] %}
+                <form method="POST" action="{{ url_for('delete_thread', thread_id=thread['_id']) }}" style="display: inline;">
+                    <button type="submit" style="background-color: #00468c; color: white;">Close Thread</button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
