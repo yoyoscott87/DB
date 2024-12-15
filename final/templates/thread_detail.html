@@ -50,49 +50,75 @@
         }
         button {
             margin: 5px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            opacity: 0.8;
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- 主題標題與描述 -->
         <div class="title">{{ thread['title'] }}</div>
         <div class="description">{{ thread['description'] or "No description provided" }}</div>
 
-        <!-- 新增圖片顯示 -->
+        <!-- 圖片顯示 -->
         {% if thread['image'] %}
             <div style="text-align: center; margin-bottom: 20px;">
                 <img src="/uploads/{{ thread['image'] }}" alt="Thread Image" style="max-width: 400px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
             </div>
         {% endif %}
 
+        <!-- 新增留言表單 -->
         {% if not thread['closed'] %}
             <form method="POST" class="message-box">
                 <label for="text">Add Message:</label>
                 <input type="text" id="text" name="text" required>
-                <button type="submit">Send</button>
+                <button type="submit" style="background-color: #6589b1; color: white;">Send</button>
             </form>
         {% else %}
             <p style="color: red; text-align: center;">This thread is closed. You cannot add new messages.</p>
         {% endif %}
+
+        <!-- 留言列表 -->
         <h3 style="text-align: center;">Messages:</h3>
         <ul class="message-list">
             {% for message in thread['messages'] %}
                 <li>
                     <strong>{{ message['user'] }}:</strong> {{ message['text'] }}
                     {% if session['username'] == message['user'] %}
+                        <!-- 刪除留言按鈕 -->
                         <form method="POST" action="{{ url_for('delete_message', thread_id=thread['_id'], message_id=message['_id']) }}" style="display: inline;">
-                            <button type="submit">Delete</button>
+                            <button type="submit" style="background-color: #6589b1; color: white;">Delete</button>
                         </form>
                     {% endif %}
                 </li>
             {% endfor %}
         </ul>
+
+        <!-- 按鈕區域 -->
         <div class="button-container">
-            <a href="{{ url_for('threads') }}"><button>Back to Threads</button></a>
+            <a href="{{ url_for('threads') }}">
+                <button style="background-color: #6589b1; color: white;">Back to Threads</button>
+            </a>
+            
             {% if session['username'] == thread['created_by'] %}
+                <!-- 編輯主題按鈕 -->
+                <a href="{{ url_for('update_thread', thread_id=thread['_id']) }}">
+                    <button style="background-color: #6589b1; color: white;">Edit Thread</button>
+                </a>
+
+                <!-- 關閉主題按鈕 -->
+                <!-- 刪除主題按鈕 -->
                 <form method="POST" action="{{ url_for('delete_thread', thread_id=thread['_id']) }}" style="display: inline;">
-                    <button type="submit" style="background-color: #00468c; color: white;">Close Thread</button>
+                    <button type="submit" style="background-color: #6589b1; color: white;">Delete Thread</button>
                 </form>
+
             {% endif %}
         </div>
     </div>

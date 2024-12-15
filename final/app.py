@@ -182,5 +182,29 @@ def delete_message(thread_id, message_id):
     )
     return redirect(url_for('thread_detail', thread_id=thread_id))
 
+@app.route('/threads/<thread_id>/update', methods=['GET', 'POST'])
+def update_thread(thread_id):
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    thread = mongo.db.threads.find_one({'_id': ObjectId(thread_id)})
+    if not thread:
+        return 'Thread not found', 404
+
+    if thread['created_by'] != session['username']:
+        return 'You are not authorized to edit this thread', 403
+
+    if request.method == 'POST':
+        title = request.form.get('title')
+        description = request.form.get('description')
+
+        mongo.db.threads.update_one(
+            {'_id': ObjectId(thread_id)},
+            {'$set': {'title': title, 'description': description}}
+        )
+        return redirect(url_for('thread_detail', thread_id=thread_id))
+
+    return render_template('update_thread.html', thread=thread)
+
 if __name__ == '__main__':
     app.run(debug=True)
